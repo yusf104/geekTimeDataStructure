@@ -1,0 +1,82 @@
+#leetcode:189
+#给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
+
+#解法一：临时数组
+class Solution {
+    public void rotate(int[] nums, int k) {
+        //指定一个临时数组 存放当前数组的所有数据
+        //将新数组的元素按照 （i + k）% length的方式拷贝回原数组
+        if (nums == null || nums.length == 0){
+            return;
+        }
+        int[] temp = new int[nums.length];
+        for (int i = 0; i < nums.length; ++i ){
+            temp[i] = nums[i];
+        }
+        for (int i = 0; i < nums.length; ++i){
+            nums[(i + k) % nums.length] = temp[i];
+        }
+    }
+}
+
+#解法二：多次翻转数组
+
+class Solution {
+    public void rotate(int[] nums, int k) {
+      //翻转数组法思路
+      //由于k可能大于nums.length 如果大于nums.length则其旋转效果与 k % nums.length的旋转效果一样，所以预处理k = k % nums.length
+      //先将数组整体翻转
+      //再将0~k-1的元素翻转
+      //最后k~nums.length-1的元素翻转
+      k = k % nums.length;
+      reverseArray(nums, 0, nums.length - 1);
+      reverseArray(nums, 0, k - 1);
+      reverseArray(nums, k, nums.length - 1);
+    }
+    public void reverseArray(int[] nums, int start, int end){
+        while(start < end){
+            int temp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = temp;
+            start ++;
+            end --;
+        }
+    }
+}
+
+#解法三：环形替换
+
+class Solution {
+    public void rotate(int[] nums, int k) {
+        //环形旋转解法思路
+        //分析可知，每次每次向后旋转的次数保证是n 和 k的最大公约数即可完成所有数据的移动
+        int n = nums.length;
+        k = k % n;
+        //count表示需要旋转挪动的次数
+        int count = gcd(k, n);
+        for (int start = 0; start < count; start++){
+            //表示当前旋转位置
+            int current = start;
+            //表示当前旋转位置值
+            int prev = nums[start];
+            do{
+                //找到要交换的目标位置
+                int next = (current + k) % n;
+                //保存目标位置值
+                int temp = nums[next];
+                //赋值到目标位置
+                nums[next] = prev;
+                //更新当前位置及位置的值
+                prev = temp;
+                current = next;
+                //起始时start == current，经过一次do后可能不再相等，向后一直交换；
+                //当再次start == current时，说明这轮交换已经结束，进入for循环，进行下轮交换 
+            }while(start != current);
+        }
+    }
+
+    //求俩数最大公约数
+    public int gcd(int x, int y){
+        return y > 0 ? gcd(y, x % y) : x; 
+    }
+}
