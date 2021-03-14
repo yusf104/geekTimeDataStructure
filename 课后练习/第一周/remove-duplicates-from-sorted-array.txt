@@ -1,0 +1,25 @@
+#leetcode:26
+#给定一个排序数组，你需要在 原地 删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。
+
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        //快慢指针解题思路
+        //1.定义2个指针，初始位置0，j循环遍历nums,i指向最后一个不重复元素的位置
+        //2.找不同值：当遇到nums[i] = nums[j]时，n不动，j向后移动
+        //3.直到遇到nums[i] != nums[j],此时 nums[j]赋值给nums[i+1],i向后挪动1位
+        //4.返回慢指针位置 + 1就是数组长度
+        if (nums == null || nums.length == 0){
+            return 0;
+        }  
+        //定义慢指针初始位置0
+        int i = 0;     
+        for (int j = 0; j < nums.length; j++){
+            if (nums[i] != nums[j]){
+                i ++;
+                nums[i] = nums[j];
+                
+            }
+        }
+        return i + 1;
+    }
+}
