@@ -1,2 +1,32 @@
 // 206. 反转链表
 // 反转一个单链表
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        //双指针法解题思路
+        //定义2个指针，初始pre指向head,cur指向null,
+        //2指针一起向后移动，并更改指向
+        ListNode cur = null;
+        ListNode pre = head;
+        while (pre != null){
+            //先保存pre.next的值，防止指针丢失
+            ListNode temp = pre.next;
+            //修改指向
+            pre.next = cur;
+            //向后移动
+            cur = pre;
+            pre = temp;
+        }
+        return cur;
+    }
+}
