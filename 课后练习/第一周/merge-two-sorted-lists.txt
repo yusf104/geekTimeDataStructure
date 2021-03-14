@@ -1,0 +1,19 @@
+#leetcode:21
+# 将两个升序链表合并为一个新的 升序 链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。 
+
+
+
+class Solution {
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        //递归思路：
+        //定义新链表头部res
+        //第一步：比较l1和l2的较小者，作为res
+        //第二步：比较res的next(原链表中的后继节点)和上一步中l1和l2的较大者，较小者作为res的next
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
+        ListNode res = l1.val > l2.val ? l2 : l1;
+        res.next = mergeTwoLists(res.next, l1.val <= l2.val ? l2 : l1);
+        return res;
+     
+    }
+}
