@@ -1,3 +1,24 @@
 #
 #给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。
 #
+
+class Solution {
+    public void moveZeroes(int[] nums) {
+        //思路：定义2个指针i和j,i从nums[0]开始遍历,j记录数组第一个非0元素的位置
+        //第一次循环把所有非0元素放到j前
+        //第二次循环把j和j之后得所有元素都置为0
+        if (nums == null || nums.length == 0){
+            return;
+        }
+        int j =0;
+        for (int i = 0; i < nums.length; ++i ){
+            if (nums[i] != 0){
+                nums[j] = nums[i];
+                j++;
+            }
+        }
+        for (int i = j; i < nums.length; i++){
+            nums[i] = 0;
+        }
+    }
+}
