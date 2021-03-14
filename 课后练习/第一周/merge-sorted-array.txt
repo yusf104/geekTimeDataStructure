@@ -38,3 +38,29 @@ class Solution {
 }
 
 #解法二：双指针从后往前遍历
+
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        //双指针 从后向前遍历法解题思路
+        //从num1的最后一位开始插入数据，从右向左遍历2个数组，值较大的放入num1中
+        // 好处主要是不需要额外复制一个nums1，空间复杂度变为O(1)
+
+        int p1 = m - 1;
+        int p2 = n - 1;
+        int p = m + n - 1;
+        while (p1 >= 0 && p2 >= 0){
+            if (nums1[p1] >= nums2[p2]){
+                nums1[p] = nums1[p1];
+                p1 --;
+            }else{
+                nums1[p] = nums2[p2];
+                p2 --;
+            }
+            p --;
+        }
+        //将nums2的数组剩余值复制
+        System.arraycopy(nums2, 0, nums1, 0, p2 + 1);
+
+        
+    }
+}
