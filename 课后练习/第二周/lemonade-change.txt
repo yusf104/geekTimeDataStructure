@@ -11,3 +11,36 @@
 
 
 #贪心算法
+
+class Solution {
+    public boolean lemonadeChange(int[] bills) {
+        //贪心算法思路
+        //维护一个5块零钱和10块零钱的值
+        //如果收到的钱是5块，则直接收下
+        //如果收到的钱是10块，则查看5块零钱的数量够找零吗，够的话减一，不够返回false
+        //如果收到的钱是20块，则优先从10块零钱的数里去减一，再减个5，如果没有10块，则减去三个5块，如果不够就返回false
+        int fiveNum = 0;
+        int temNum = 0;
+        for (int bill : bills){
+            if (bill == 5){
+                fiveNum++;
+            }else if(bill == 10){
+                if(fiveNum == 0){
+                    return false;
+                }
+                fiveNum--;
+                temNum++;
+            }else if(bill == 20){
+                if(fiveNum > 0 && temNum > 0){
+                    fiveNum--;
+                    temNum--;
+                }else if(fiveNum >= 3){
+                    fiveNum -= 3;
+                }else{
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
