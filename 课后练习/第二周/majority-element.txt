@@ -91,3 +91,27 @@ class Solution {
         return count;
     }
 }
+
+
+#解法四 摩根投票法
+#复杂度分析： 时间复杂度O(n) 空间复杂度O(1)
+class Solution {
+    public int majorityElement(int[] nums) {
+        //摩根投票法
+        //众数候选人初始是nums[0],其数量count = 1
+        //遍历数组，遇到与nums[0]值相同的值,count + 1,否则count - 1 当count = 0时更换候选人
+        int aimNum = nums[0], count = 1;
+        for (int i = 1; i < nums.length; i++){
+            if (nums[i] == aimNum){
+                count++;
+            }else{
+                count--;
+                if (count == 0){
+                    aimNum = nums[i];
+                    count = 1;
+                }
+            }
+        } 
+        return aimNum;
+    }
+}
