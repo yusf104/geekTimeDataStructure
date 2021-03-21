@@ -2,3 +2,50 @@
 #给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
 
 #设计一个算法来计算你所能获取的最大利润。你可以尽可能地完成更多的交易（多次买卖一支股票）。
+
+#解法一 暴力搜索
+#复杂度分析：时间复杂度 O(2^n) 
+class Solution {
+
+    private int res;
+    public int maxProfit(int[] prices) {
+        //暴力搜索
+        //每天得操作可以分为买入 或者 不买入2种操作
+        //由此可以得到递归树，回溯计算每种情况的所得利润
+        int length = prices.length;
+        if (length < 2){
+            return 0;
+        }
+        this.res = 0;
+        dfs(prices, 0, length, 0, res);
+        return this.res;
+    }
+
+    /**
+     * @param prices 股价数组
+     * @param index  当前是第几天，从 0 开始
+     * @param status 0 表示不持有股票，1表示持有股票，
+     * @param length 表示数组长度，
+     * @param profit 当前收益
+     */
+
+    public void dfs(int[] prices, int index, int length, int status, int profit){
+        //递归结束条件 当前天数等于数组最大长度
+        //这时候说明一个递归树分支已经到底，比较当前收益和res，返回较大值
+        if (index == length){
+            this.res = Math.max(this.res, profit);
+            return;
+        }
+        //还没到最后一天，二话不说直接下探
+        dfs(prices, index + 1, length, status, profit);
+        //回溯
+        //如果当前时间是持有股票状态则尝试卖出，盈利是前后2天股票差价 + profit
+        //如果当前时间没持有股票，则尝试买入，盈利是profit - 股票价值
+        if (status == 0){
+             // 可以尝试转向 1
+            dfs(prices, index + 1, length, 1, profit - prices[index]);
+        }else{
+            dfs(prices, index + 1, length, 0, profit + prices[index]);
+        }
+    }
+}
