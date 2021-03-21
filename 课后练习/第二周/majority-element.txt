@@ -44,3 +44,50 @@ class Solution {
       
     }
 }
+
+
+#解法三 分治
+#复杂度分析： 时间复杂度O(nlogn) 空间复杂度O(logn)（递归过程消耗的栈空间）
+class Solution {
+    public int majorityElement(int[] nums) {
+       //分治法思路
+       //1.将数组分成左右2部分，分别求出左右部分的众数a1和a2
+       //2.递归分解，直到所有的子问题都是长度为 1 的数组
+       //3.回溯，查看众数
+       return majorityElementRec(nums, 0, nums.length - 1);
+    }
+
+    public int majorityElementRec(int[] nums, int start, int end){
+        //递归结束条件：如果start = end，一个元素直接返回本身
+        if (start == end){
+            return nums[start];
+        }
+        //本层处理
+
+
+        //下探
+        int mid = (end - start)/2 + start;
+        int left = majorityElementRec(nums, start, mid);
+        int right = majorityElementRec(nums, mid + 1, end);
+
+        //reverse 如果当前返回值的left = right 说明已经找到众数
+        if (left == right){
+            return left;
+        }
+        //到这里说明找到的左右众数不一致，则比较2个众数数量谁的较大，则返回谁的
+        int leftCount = countnum(nums, left, start, end);
+        int rightCount = countnum(nums, right, start, end);
+        return leftCount > rightCount ? left : right;
+
+
+    }
+    public int countnum(int[] nums, int num, int lo, int hi){
+        int count = 0;
+        for (int i = lo; i <= hi; i++){
+            if (nums[i] == num){
+                count++;
+            }
+        }
+        return count;
+    }
+}
