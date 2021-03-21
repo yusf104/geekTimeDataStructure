@@ -1,0 +1,29 @@
+#leetcode: 455
+#
+
+
+#排序 + 贪心算法
+#复杂度分析：时间复杂度O(nlogn + mlogm) 主要是排序消耗的时间 空间复杂度O(logn + logm) 主要是排序消耗
+
+class Solution {
+    public int findContentChildren(int[] g, int[] s) {
+        //排序 + 贪心算法
+        //思路 ： 先对2个数组都升序排序，尽可能多的满足
+        Arrays.sort(g);
+        Arrays.sort(s);
+        int numChildren = g.length;
+        int numCookies = s.length;
+        int count = 0;
+        for (int i = 0, j = 0; i < numChildren && j < numCookies; i++, j++){
+            //查询出能满足当前第i个孩子的那块饼干
+            while (j < numCookies && g[i] > s[j]){
+                j++; //不满足，继续向后找
+            }
+            //排除找到s[]最后的情况
+            if (j < numCookies){
+                count++;
+            }
+        }
+        return count;
+    }
+}
