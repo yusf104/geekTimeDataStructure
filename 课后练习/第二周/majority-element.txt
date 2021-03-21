@@ -32,3 +32,15 @@ class Solution {
         return keyNum;
     }
 }
+
+#解法二 排序输出中位数
+#复杂度分析：时间复杂度O(nlogn) 空间复杂度O(logn) 主要消耗在排序方法中
+class Solution {
+    public int majorityElement(int[] nums) {
+        //排序
+        //先将数组排序，再返回数组下标为N/2位置的元素即可
+        Arrays.sort(nums);
+        return nums[nums.length / 2];
+      
+    }
+}
