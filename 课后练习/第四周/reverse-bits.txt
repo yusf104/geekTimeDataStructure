@@ -21,7 +21,7 @@ public class Solution {
 
 
 解法二 逐位分离
-复杂度分析
+复杂度分析：时间复杂度O(1)  空间复杂度O(1)
 
 public class Solution {
     //逐位分离 每次都使用 n 的最低一位去更新答案的最低一位，使用完将 n 进行右移一位，将答案左移一位。
@@ -37,5 +37,20 @@ public class Solution {
             n >>= 1;
         }
         return res;
+    }
+}
+
+解法三 分组互换（分治）
+复杂度分析：时间复杂度O(1)  空间复杂度O(1)
+
+public class Solution {
+
+    public int reverseBits(int n) {
+         n = ((n & 0xAAAAAAAA) >>> 1)  | ((n & 0x55555555) << 1);
+        n = ((n & 0xCCCCCCCC) >>> 2)  | ((n & 0x33333333) << 2);
+        n = ((n & 0xF0F0F0F0) >>> 4)  | ((n & 0x0F0F0F0F) << 4);
+        n = ((n & 0xFF00FF00) >>> 8)  | ((n & 0x00FF00FF) << 8);
+        n = ((n & 0xFFFF0000) >>> 16) | ((n & 0x0000FFFF) << 16);
+        return n;
     }
 }
