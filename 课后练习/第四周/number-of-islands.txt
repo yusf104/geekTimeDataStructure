@@ -1,0 +1,55 @@
+leetcode:200 岛屿数量
+给你一个由 '1'（陆地）和 '0'（水）组成的的二维网格，请你计算网格中岛屿的数量。
+
+岛屿总是被水包围，并且每座岛屿只能由水平方向和/或竖直方向上相邻的陆地连接形成。
+
+此外，你可以假设该网格的四条边均被水包围。
+
+解法一：深度优先遍历
+复杂度分析：时间复杂度 O(M*N) 空间复杂度O(M*N)
+class Solution {
+    public int numIslands(char[][] grid) {
+        //深度优先遍历
+        //思路：从grid[0][0]出发遍历所有节点
+        //当遇到grid[i][j] == 1时，进行深度优先遍历，递归的查询它的上下左右节点，将其置为0，因为多个1连城一片算一块大陆，相邻的陆地避免被再次遍历到，所以直接改成0
+        int count = 0;
+        if (grid == null || grid.length == 0){
+            return count;
+        }
+        
+        int numberOfrow = grid.length;
+        int numberOfColumn = grid[0].length;
+        for (int i = 0; i < numberOfrow; i++){
+            for (int j = 0; j < numberOfColumn; j++){
+                if (grid[i][j] == '1'){
+                    count++;
+                    //同时对节点进行深度优先遍历，递归修改其连接的所有1
+                    dfs(grid, i, j);
+                }
+            }
+        }
+        return count;
+    }
+
+    public void dfs(char[][] grid, int row, int column){
+        int numberOfrow = grid.length;
+        int numberOfColumn = grid[0].length;
+
+        //如果坐标超出了坐标系 则直接返回 --->递归结束条件
+        if (row < 0 || row >= numberOfrow || column < 0 || column >=numberOfColumn || grid[row][column] == '0'){
+            return;
+        }
+        //处理当前层
+        grid[row][column] = '0';
+        //下探
+        dfs(grid, row - 1, column);//上
+        dfs(grid, row + 1, column);//下
+        dfs(grid, row, column - 1);//左
+        dfs(grid, row, column + 1);//右
+
+    }
+}
+
+
+解法二：并查集
+复杂度分析：
