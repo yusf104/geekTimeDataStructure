@@ -18,3 +18,24 @@ public class Solution {
         return res;
     }
 }
+
+
+解法二 逐位分离
+复杂度分析
+
+public class Solution {
+    //逐位分离 每次都使用 n 的最低一位去更新答案的最低一位，使用完将 n 进行右移一位，将答案左移一位。
+    public int reverseBits(int n) {
+        int res = 0;
+        
+        for (int i = 0; i < 32; i++){
+            //先将目标值左移1位，空出一位，接纳新值
+            res <<= 1;
+            //n & 1 取到最低位的值，并更新到res的空位中
+            res += (n & 1);
+            //n向右移动一位去除已处理的位置
+            n >>= 1;
+        }
+        return res;
+    }
+}
