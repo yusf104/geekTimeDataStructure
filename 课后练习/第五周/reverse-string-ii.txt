@@ -3,4 +3,24 @@ leetcode:541. 反转字符串 II
 
 如果剩余字符少于 k 个，则将剩余字符全部反转。
 如果剩余字符小于 2k 但大于或等于 k 个，则反转前 k 个字符，其余字符保持原样。
+
+class Solution {
+    public String reverseStr(String s, int k) {
+       StringBuffer sb1 = new StringBuffer();
+        boolean rev = true;
+        for (int i = 0;sb1.length() < s.length();i+=k){
+            StringBuffer sb2 = new StringBuffer();
+            int j = i+k < s.length()?i+k:s.length();
+            sb2.append(s.substring(i,j));
+            if (rev){
+                sb1.append(sb2.reverse());
+                rev = false;
+            }else {
+                sb1.append(sb2);
+                rev = true;
+            }
+        }
+        return sb1.toString();
+    }
+}
  
