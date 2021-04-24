@@ -1,0 +1,16 @@
+leetcode: 231 2的幂
+
+解法思路：n > 0 且 n & (n - 1) == 0 即可判定是否满足 n = 2^x
+复杂度分析：时间复杂度O(1) 空间复杂度O(1)
+
+class Solution {
+    public boolean isPowerOfTwo(int n) {
+        if(n <= 0){
+            return false;
+        }
+        if((n & (n-1)) == 0){
+            return  true;
+        }
+        return false;
+    }
+}
