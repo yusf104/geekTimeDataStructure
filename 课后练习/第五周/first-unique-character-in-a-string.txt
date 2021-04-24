@@ -49,3 +49,33 @@ class Solution {
          return -1;
     }
 }
+
+解法三  哈希存储索引
+复杂度分析：时间复杂度：O(n) 空间复杂度：最大O(M) M是字符集个数
+
+class Solution {
+    public int firstUniqChar(String s) {
+        Map<Character, Integer> position = new HashMap<Character, Integer>();
+        int n = s.length();
+        for (int i = 0; i < n; ++i) {
+            char ch = s.charAt(i);
+            if (position.containsKey(ch)) {
+                position.put(ch, -1);
+            } else {
+                position.put(ch, i);
+            }
+        }
+        int first = n;
+        for (Map.Entry<Character, Integer> entry : position.entrySet()) {
+            int pos = entry.getValue();
+            if (pos != -1 && pos < first) {
+                first = pos;
+            }
+        }
+        if (first == n) {
+            first = -1;
+        }
+        return first;
+    }
+}
+
